@@ -1,5 +1,5 @@
 // == START OF PHOENIX JS ==
-window.addEventListener('DOMContentLoaded', function (){
+var initPhoenix = function (){
 	'use strict';
 
 	// START OF: utilities =====
@@ -38,7 +38,7 @@ window.addEventListener('DOMContentLoaded', function (){
 	//all the sliders are configurated via attributes in the markup
 	(function() {
 		var $sliders = $('.js-slider');
-		$sliders.on('init', function(slick){
+		$sliders.off('init').on('init', function(slick){
 			$('.cover__slider__dots')
 				.wrap('<div class="cover__slider__dots_container"></div>');
 		});
@@ -69,7 +69,7 @@ window.addEventListener('DOMContentLoaded', function (){
 	// START OF: show more works =====
 	var showWorks = (function(){
 		var bind = function () {
-			$('.js-show-more-works').on('click', function(event) {
+			$('.js-show-more-works').off('click').on('click', function(event) {
 				event.preventDefault();
 
 				$(this).fadeOut(400, function () {
@@ -87,7 +87,7 @@ window.addEventListener('DOMContentLoaded', function (){
 	var filterizr = (function(){
 		var bind = function () {
 			var $filters = $('.js-filtering-button');
-			$filters.on('click', function(event) {
+			$filters.off('click').on('click', function(event) {
 				event.preventDefault();
 
 				$filters.removeClass('button--black').addClass('button--gray');
@@ -145,7 +145,7 @@ window.addEventListener('DOMContentLoaded', function (){
 			$('html,body').animate({scrollTop: window.innerHeight + window.scrollY}, 700);
 		};
 		var bindScrollFullscreen = function () {
-			$scrollFullscreen.on('click', function(event) {
+			$scrollFullscreen.off('click').on('click', function(event) {
 				event.preventDefault();
 				scrollFullscreen();
 			});
@@ -155,6 +155,7 @@ window.addEventListener('DOMContentLoaded', function (){
 			bindScrollFullscreen: bindScrollFullscreen
 		}
 	}());
+
 	// ===== END OF: scroll to
 
 	// START OF: content changer =====
@@ -163,7 +164,7 @@ window.addEventListener('DOMContentLoaded', function (){
 		var $contentBox = $('.js-content-box');
 		var slidingTime = 400;
 		var bind = function () {
-			$contentTrigger.on('click', function(event) {
+			$contentTrigger.off('click').on('click', function(event) {
 				event.preventDefault();
 				var contentAttr = $(this).attr('data-content-index');
 
@@ -192,7 +193,7 @@ window.addEventListener('DOMContentLoaded', function (){
 			$('.js-dropdown').removeClass('state-visible');
 		},
 		bindCollapsingAll: function () {
-			$(document).on('click', function(event) {
+			$(document).off('click').on('click', function(event) {
 				dropdown.collapseAll();
 			});
 		},
@@ -296,7 +297,7 @@ window.addEventListener('DOMContentLoaded', function (){
 		},
 		bindOverlay: function () {
 			var self = this;
-			self.DOM.$ovelay.on('click', function(event) {
+			self.DOM.$ovelay.off('click').on('click', function(event) {
 				event.preventDefault();
 				self.closeOpened();
 			});
@@ -305,7 +306,7 @@ window.addEventListener('DOMContentLoaded', function (){
 			var self = this;
 			var $triggers = $specificElement ? $specificElement : self.DOM.$openers;
 
-			$triggers.on('click', function(event) {
+			$triggers.off('click').on('click', function(event) {
 				event.preventDefault();
 				event.stopPropagation();
 
@@ -316,7 +317,7 @@ window.addEventListener('DOMContentLoaded', function (){
 		},
 		bindClosers: function () {
 			var self = this;
-			self.DOM.$closers.on('click', function(event) {
+			self.DOM.$closers.off('click').on('click', function(event) {
 				event.preventDefault();
 				self.closeOpened();
 			});
@@ -381,12 +382,12 @@ window.addEventListener('DOMContentLoaded', function (){
 		}
 
 		var bind = function() {
-			DOM.$toggler.on('click', function(event) {
+			DOM.$toggler.off('click').on('click', function(event) {
 				event.preventDefault();
 				toggleMenu();
 			});
 
-			$('.js-navigation-link').on('click', function(event) {
+			$('.js-navigation-link').off('click').on('click', function(event) {
 				event.preventDefault();
 				closeMenu();
 				var destination = $(this).attr('href');
@@ -395,7 +396,7 @@ window.addEventListener('DOMContentLoaded', function (){
 				$('html,body').animate({scrollTop: scrollValue}, 300);
 			});
 
-			$('.js-close-navigation').on('click', function(event) {
+			$('.js-close-navigation').off('click').on('click', function(event) {
 				event.preventDefault();
 				closeMenu();
 			});
@@ -465,7 +466,7 @@ window.addEventListener('DOMContentLoaded', function (){
 		}
 		return {
 			bind: function () {
-				DOM.savingForm.on('submit', function(event) {
+				DOM.savingForm.off('submit').on('submit', function(event) {
 					event.preventDefault();
 					sendData($(this));
 					saveEmail($(this));
@@ -481,7 +482,7 @@ window.addEventListener('DOMContentLoaded', function (){
 			$form: $('.js-subscribe-form')
 		};
 		var bind = function () {
-			DOM.$form.on('submit', function(event) {
+			DOM.$form.off('submit').on('submit', function(event) {
 				event.preventDefault();
 
 				register($(this));
@@ -641,5 +642,10 @@ window.addEventListener('DOMContentLoaded', function (){
 	subscribeForm.bind();
 	lightboxPlugin.init();
 	maps.init(document.querySelectorAll('.js-map'));
-});
+
+	console.log('Phoenix Inited');
+};
+
+window.addEventListener('DOMContentLoaded', initPhoenix);
+window.addEventListener('initPhoenix', initPhoenix);
 // == END OF PHOENIX JS ==

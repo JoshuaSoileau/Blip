@@ -1,0 +1,41 @@
+.btn[data-target="#components-modal"] {
+    position: fixed;
+    z-index: 5;
+    bottom: 30px;
+    left: 30px;
+    padding: 0;
+    border: 0;
+    width: 60px;
+    height: 60px;
+    background: white;
+    color: #333;
+    border-radius: 50%;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    font-size: 30px;
+    font-weight: 100;
+}
+
+#components-modal {
+    position: fixed;
+    background: #242526;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    height: 400px;
+
+    .modal-dialog {
+        max-width: 80%;
+    }
+
+    li {
+        display: inline-block;
+        width: 20%;
+        margin-right: 3.33%;
+        margin-bottom: 8px;
+        img {
+            width: 100%;
+        }
+    }
+}
+
