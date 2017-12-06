@@ -6,6 +6,10 @@ var app;
 
     App.prototype = {
         init: function() {
+            $.expr[':'].emptyOrText = function(e) {
+                return $(e).children().length == 0;
+            };
+
             this.preview = $('#preview');
             this.modal = $("#components-modal-content");
             this.initObservers();
@@ -15,10 +19,11 @@ var app;
 
         initEditorLinks: function() {
             var targets = [
-                '[class*="text"]',
-                '[class*="title"]'
+                '[class*="text"]:emptyOrText',
+                '[class*="link"]:emptyOrText',
+                '[class*="title"]:emptyOrText'
             ];
-            var elements = document.querySelectorAll(targets.join(', '));
+            var elements = $(targets.join(', ')).get();
             if(!this.editor) {
                 this.editor = new MediumEditor(elements);
             } else {
@@ -64,10 +69,9 @@ var app;
             var target = $(event.target).is('a') ? $(event.target) : $(event.target).closest('a'),
                 templateId = target.attr('data-template');
             $(this.preview).append( $('#'+templateId).html() );
-            // $('.modal').modal('hide');
-            $('.modal-backdrop').remove()
-            window.dispatchEvent(new CustomEvent('initPhoenix'));
+            $('.modal .close').click();
             this.initEditorLinks();
+            // window.dispatchEvent(new CustomEvent('initPhoenix'));
         }
     };
     $(function() {
