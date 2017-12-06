@@ -10,6 +10,20 @@ var app;
             this.modal = $("#components-modal-content");
             this.initObservers();
             this.buildLinks();
+            this.initEditorLinks();
+        },
+
+        initEditorLinks: function() {
+            var targets = [
+                '[class*="text"]',
+                '[class*="title"]'
+            ];
+            var elements = document.querySelectorAll(targets.join(', '));
+            if(!this.editor) {
+                this.editor = new MediumEditor(elements);
+            } else {
+                this.editor.addElements(elements);
+            }
         },
 
         initObservers: function() {
@@ -50,9 +64,10 @@ var app;
             var target = $(event.target).is('a') ? $(event.target) : $(event.target).closest('a'),
                 templateId = target.attr('data-template');
             $(this.preview).append( $('#'+templateId).html() );
-            $('.modal').modal('hide');
+            // $('.modal').modal('hide');
             $('.modal-backdrop').remove()
-            // window.dispatchEvent(new CustomEvent('initPhoenix'));
+            window.dispatchEvent(new CustomEvent('initPhoenix'));
+            this.initEditorLinks();
         }
     };
     $(function() {

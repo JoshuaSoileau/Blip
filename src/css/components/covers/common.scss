@@ -1,10 +1,9 @@
 //common styles for all covers
 .cover{
 	position: relative; //keeps menu
-	height: 100vh;
+	height: 70vw;
 
 	padding-top: 0.1px; //enables margin-top
-
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -28,6 +27,7 @@
 		margin-bottom: 20px;
 	}
 }
+
 .cover__feature_row{
 }
 .cover__features_box{
