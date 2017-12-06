@@ -1,11 +1,12 @@
 @import "components-modal";
 
 body {
-    background-color: #e2e1e0 !important;
+    background-color: #cccccc !important;
 }
 
 .preview-container {
     max-width: 1200px;
+    min-width: 600px;
     margin: 0 auto;
     padding-top: 50px;
 }
@@ -34,3 +35,46 @@ body {
 .container {
     height: 100%;
 }
+
+[style*="background-image"] {
+    position: relative;
+    &:hover {
+        .image-editor-controls {
+            display: block;
+        }
+    }
+}
+
+.image-editor-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 100;
+    display: none;
+
+    input {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+        float: right;
+    }
+
+    label {
+        padding: 10px 16px;
+        font-size: 14px;
+        background: #e05555;
+        color: white;
+        cursor: pointer;
+    }
+
+    label:focus,
+    input:focus + label,
+    label:active,
+    input:active + label{
+        background: #e05555 - #111;
+    }
+}
+

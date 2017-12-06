@@ -7,7 +7,7 @@ var app;
     App.prototype = {
         init: function() {
             $.expr[':'].emptyOrText = function(e) {
-                return $(e).children().length == 0;
+                return $(e).children().length <= 1;
             };
 
             this.preview = $('#preview');
@@ -15,13 +15,43 @@ var app;
             this.initObservers();
             this.buildLinks();
             this.initEditorLinks();
+            this.insertImageEditorControls();
+        },
+
+        initObservers: function() {
+            $(document).on('click', '.add-template-link', this.addComponent.bind(this));
+            $(document).on('change', '.image-editor-file-upload', this.uploadImage.bind(this));
+        },
+
+        insertImageEditorControls: function() {
+            $('#preview .image-editor-controls').remove();
+            $('#preview [style*="background-image"]').each(function(index, ele) {
+                $(ele).prepend(
+                    '<div class="image-editor-controls">' +
+                        '<input type="file" name="file-'+index+'" id="file-'+index+'" class="image-editor-file-upload" placeholder="Change Image"/>' +
+                        '<label for="file-'+index+'">Change Image</label>' +
+                    '</div>'
+                );
+            });
+        },
+
+        uploadImage: function() {
+            var input = $(event.target),
+                target = $(event.target).closest('[style*="background-image"]');
+            if(!target.length) return;
+            var image = input[0].files[0];
+            if(!image) return;
+            debugger;
+            var url = URL.createObjectURL(image);
+            target.css('background-image', 'url(' + url + ')');
+            console.log('found a target');
         },
 
         initEditorLinks: function() {
             var targets = [
-                '[class*="text"]:emptyOrText',
-                '[class*="link"]:emptyOrText',
-                '[class*="title"]:emptyOrText'
+                '#preview [class*="text"]:emptyOrText',
+                '#preview [class*="link"]:emptyOrText',
+                '#preview [class*="title"]:emptyOrText'
             ];
             var elements = $(targets.join(', ')).get();
             if(!this.editor) {
@@ -31,9 +61,6 @@ var app;
             }
         },
 
-        initObservers: function() {
-            $(document).on('click', '.add-template-link', this.addComponent.bind(this));
-        },
 
         buildLinks: function() {
             var types = Object.keys(components);
@@ -71,7 +98,12 @@ var app;
             $(this.preview).append( $('#'+templateId).html() );
             $('.modal .close').click();
             this.initEditorLinks();
+            this.insertImageEditorControls();
             // window.dispatchEvent(new CustomEvent('initPhoenix'));
+
+            $('html, body').animate({
+                scrollTop: $('#preview > *:last-child').offset().top - 50
+            }, 1400);
         }
     };
     $(function() {
