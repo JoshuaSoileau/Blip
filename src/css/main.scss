@@ -1,7 +1,38 @@
 @import "components-modal";
 
+$gradStart: #5a9ec8;
+$gradEnd: #51cbbb;
+$borderWidth: 4px;
+$bgHeight: 60vw;
+
+html, body {
+    height: 100%;
+}
+
 body {
-    background-color: #cccccc !important;
+    position: relative;
+
+    > * {
+        font-family: helvetica;
+    }
+
+    &:before {
+        content: "";
+        display: block;
+        width: 100%;
+        height: $bgHeight;
+        background: blue;
+        position: absolute;
+        z-index: -1;
+        background-image: -webkit-gradient(linear,left top,right top,from(#5a9ec8),to(#51cbbb));
+        background-image: linear-gradient(90deg,$gradStart,51cbbb);
+    }
+}
+
+.bg-bottom {
+    position: absolute;
+    top: $bgHeight;
+    z-index: -1;
 }
 
 .preview-container {
@@ -11,17 +42,33 @@ body {
     padding-top: 50px;
 }
 
+.title {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    span {
+        display: block;
+        font-weight: normal;
+    }
+}
+
 #preview {
-    border-radius: 3px;
     transform: scale(0.8);
     transform-origin: center top;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    //border: 2px solid;
+    //border-image: linear-gradient(90deg, $gradStart, $gradEnd);
+    //border-image-slice: 1;
+    border-radius: 10px;
+    background: white;
+    overflow: hidden;
 
     &:empty {
-        background: rgba(255,255,255,0.95);
         height: 60vw;
         line-height: 60vw;
         text-align: center;
+        background: #efefef;
+        border: 1px solid rgba(0,0,0,0.1);
+
         &:before {
             content: "+";
             font-size: 68px;
